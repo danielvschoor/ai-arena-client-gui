@@ -74,14 +74,20 @@ RUN ln -s /home/aiarena/StarCraftII/Maps /home/aiarena/StarCraftII/maps
 # Remove the Maps that come with the SC2 client
 RUN rm -Rf /home/aiarena/StarCraftII/maps/*
 
+# Create Bot and Replay directories
+RUN mkdir -p /home/aiarena/StarCraftII/Bots
+RUN mkdir -p /home/aiarena/StarCraftII/Replays
+
 # Download the match runner gui
 RUN wget -q https://gitlab.com/aiarena/sc2-match-runner-gui/-/archive/master/sc2-match-runner-gui-master.tar.gz  && tar xvzf sc2-match-runner-gui-master.tar.gz
 
-# Install match runner requirements
-RUN pip3.7 install -r /home/aiarena/sc2-match-runner-gui-master/requirements.txt
+USER root
 
 # Change to working directory
 WORKDIR /home/aiarena/aiarena-client
+
+# Install match runner requirements
+RUN pip3.7 install -r /home/aiarena/sc2-match-runner-gui-master/requirements.txt
 
 # Add Pythonpath to env
 ENV PYTHONPATH=/home/aiarena/aiarena-client/:/home/aiarena/aiarena-client/arenaclient/
@@ -91,6 +97,11 @@ RUN pip3.7 install -r /home/aiarena/aiarena-client/requirements.txt
 
 # Install the arena client as a module
 RUN python3.7 /home/aiarena/aiarena-client/setup.py install
+
+USER aiarena
+
+# Copy the config file
+COPY ./settings.json /home/aiarena/sc2-match-runner-gui/resources/flask_server/settings.json
 
 # Run the match runner gui
 ENTRYPOINT [ "/usr/local/bin/python3.7", "/home/aiarena/sc2-match-runner-gui-master/resources/flask_server/server.py" ]
