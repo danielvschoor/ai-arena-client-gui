@@ -81,6 +81,7 @@ RUN mkdir -p /home/aiarena/StarCraftII/Replays
 # Download the match runner gui
 RUN wget -q https://gitlab.com/aiarena/sc2-match-runner-gui/-/archive/master/sc2-match-runner-gui-master.tar.gz  && tar xvzf sc2-match-runner-gui-master.tar.gz
 
+# Switch User
 USER root
 
 # Change to working directory
@@ -98,7 +99,14 @@ RUN pip3.7 install -r /home/aiarena/aiarena-client/requirements.txt
 # Install the arena client as a module
 RUN python3.7 /home/aiarena/aiarena-client/setup.py install
 
+# Switch User
 USER aiarena
+
+# Add Pythonpath to env
+ENV PYTHONPATH=/home/aiarena/aiarena-client/:/home/aiarena/aiarena-client/arenaclient/
+
+# Create the flask_server directory
+RUN mkdir -p /home/aiarena/sc2-match-runner-gui/resources/flask_server/
 
 # Setup the config file
 RUN echo '{"bot_directory_location": "/home/aiarena/StarCraftII/Bots", "sc2_directory_location": "/home/aiarena/StarCraftII/", "replay_directory_location": "/home/aiarena/StarCraftII/Replays", "API_token": "", "max_game_time": "60486", "allow_debug": "Off", "visualize": "Off"}' > /home/aiarena/sc2-match-runner-gui/resources/flask_server/settings.json
