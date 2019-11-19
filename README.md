@@ -10,7 +10,8 @@
 
 ## Notes
 ### Mounting Bot directories
-If you want to mount directories from the host system you can add the parameter
-```-v <host_dir>:<container_dir>```
+If you want to mount directories from the host system you can add the parameter ```-v <host_dir>:<container_dir>```
+
 Example:
+
 ```docker run -v C:\Bots:/home/aiarena/StarCraftII/Bots -p 127.0.0.1:8080:8080 m1ndgames/ai-arena-client-gui```
