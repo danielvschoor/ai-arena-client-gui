@@ -100,8 +100,8 @@ RUN python3.7 /home/aiarena/aiarena-client/setup.py install
 
 USER aiarena
 
-# Copy the config file
-COPY ./settings.json /home/aiarena/sc2-match-runner-gui/resources/flask_server/settings.json
+# Setup the config file
+RUN echo '{"bot_directory_location": "/home/aiarena/StarCraftII/Bots", "sc2_directory_location": "/home/aiarena/StarCraftII/", "replay_directory_location": "/home/aiarena/StarCraftII/Replays", "API_token": "", "max_game_time": "60486", "allow_debug": "Off", "visualize": "Off"}' > /home/aiarena/sc2-match-runner-gui/resources/flask_server/settings.json
 
 # Run the match runner gui
 ENTRYPOINT [ "/usr/local/bin/python3.7", "/home/aiarena/sc2-match-runner-gui-master/resources/flask_server/server.py" ]
