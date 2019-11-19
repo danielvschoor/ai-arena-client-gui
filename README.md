@@ -1,5 +1,9 @@
 # ai-arena-client-gui
+This Container provides a full working StarCraft II linux setup including Java 11, Wine, DotNetCore and Python 3.7 including modules necessary to run the most Bots.
 
+You will be able to test your Bot locally using a Browser based GUI, either against other Bots on your System or Publicly downloadable Bots from the ai-arena SC2 ladder. (https://ai-arena.net)
+
+## Guide
 1: Download the Docker image
 ```docker pull m1ndgames/ai-arena-client-gui```
 
