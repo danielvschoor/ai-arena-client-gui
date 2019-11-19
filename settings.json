@@ -1,9 +1,0 @@
-{
-	"bot_directory_location": "/home/aiarena/StarCraftII/Bots",
-	"sc2_directory_location": "/home/aiarena/StarCraftII/",
-	"replay_directory_location": "/home/aiarena/StarCraftII/Replays",
-	"API_token": "",
-	"max_game_time": "60486",
-	"allow_debug": "Off",
-	"visualize": "Off"
-}
