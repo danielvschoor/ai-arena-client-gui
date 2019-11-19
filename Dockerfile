@@ -74,6 +74,14 @@ RUN ln -s /home/aiarena/StarCraftII/Maps /home/aiarena/StarCraftII/maps
 # Remove the Maps that come with the SC2 client
 RUN rm -Rf /home/aiarena/StarCraftII/maps/*
 
+# Download and install the Map Pack
+RUN wget -q 'http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2019Season3.zip' \
+    && unzip -P iagreetotheeula Ladder2019Season3.zip \
+    && rm Ladder2019Season3.zip
+
+RUN mv Ladder2019Season3 /home/aiarena/StarCraftII/Maps
+RUN cp /home/aiarena/StarCraftII/Maps/Ladder2019Season3/* /home/aiarena/StarCraftII/Maps
+
 # Create Bot and Replay directories
 RUN mkdir -p /home/aiarena/StarCraftII/Bots
 RUN mkdir -p /home/aiarena/StarCraftII/Replays
