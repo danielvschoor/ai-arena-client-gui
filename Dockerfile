@@ -105,11 +105,8 @@ USER aiarena
 # Add Pythonpath to env
 ENV PYTHONPATH=/home/aiarena/aiarena-client/:/home/aiarena/aiarena-client/arenaclient/
 
-# Create the flask_server directory
-RUN mkdir -p /home/aiarena/sc2-match-runner-gui/resources/flask_server/
-
 # Setup the config file
-RUN echo '{"bot_directory_location": "/home/aiarena/StarCraftII/Bots", "sc2_directory_location": "/home/aiarena/StarCraftII/", "replay_directory_location": "/home/aiarena/StarCraftII/Replays", "API_token": "", "max_game_time": "60486", "allow_debug": "Off", "visualize": "Off"}' > /home/aiarena/sc2-match-runner-gui/resources/flask_server/settings.json
+RUN echo '{"bot_directory_location": "/home/aiarena/StarCraftII/Bots", "sc2_directory_location": "/home/aiarena/StarCraftII/", "replay_directory_location": "/home/aiarena/StarCraftII/Replays", "API_token": "", "max_game_time": "60486", "allow_debug": "Off", "visualize": "Off"}' > /home/aiarena/sc2-match-runner-gui-master/resources/flask_server/settings.json
 
 # Run the match runner gui
 ENTRYPOINT [ "/usr/local/bin/python3.7", "/home/aiarena/sc2-match-runner-gui-master/resources/flask_server/server.py" ]
