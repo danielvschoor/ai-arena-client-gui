@@ -47,7 +47,7 @@ RUN apt-get install --assume-yes --no-install-recommends --no-show-upgraded \
 RUN python3 -m pip install --upgrade pip pipenv
 
 # Download python requirements files
-RUN wget https://gitlab.com/aiarena/aiarena-client/raw/master/requirements.txt -O client-requirements.txt
+RUN wget https://gitlab.com/aiarena/aiarena-client/raw/master/requirements.linux.txt -O client-requirements.txt
 RUN wget https://gitlab.com/aiarena/aiarena-client-provisioning/raw/master/aiarena-vm/templates/python-requirements.txt.j2 -O bot-requirements.txt
 
 # Install python modules
@@ -86,23 +86,14 @@ RUN cp /home/aiarena/StarCraftII/Maps/Ladder2019Season3/* /home/aiarena/StarCraf
 RUN mkdir -p /home/aiarena/StarCraftII/Bots
 RUN mkdir -p /home/aiarena/StarCraftII/Replays
 
-# Download the match runner gui
-RUN wget -q https://gitlab.com/aiarena/sc2-match-runner-gui/-/archive/master/sc2-match-runner-gui-master.tar.gz  && tar xvzf sc2-match-runner-gui-master.tar.gz
-
 # Switch User
 USER root
 
 # Change to working directory
 WORKDIR /home/aiarena/aiarena-client
 
-# Install match runner requirements
-RUN pip3.7 install -r /home/aiarena/sc2-match-runner-gui-master/requirements.txt
-
 # Add Pythonpath to env
 ENV PYTHONPATH=/home/aiarena/aiarena-client/:/home/aiarena/aiarena-client/arenaclient/
-
-# Install python requirements for the arena client
-RUN pip3.7 install -r /home/aiarena/aiarena-client/requirements.txt
 
 # Install the arena client as a module
 RUN python3.7 /home/aiarena/aiarena-client/setup.py install
@@ -117,4 +108,4 @@ ENV PYTHONPATH=/home/aiarena/aiarena-client/:/home/aiarena/aiarena-client/arenac
 RUN echo '{"bot_directory_location": "/home/aiarena/StarCraftII/Bots", "sc2_directory_location": "/home/aiarena/StarCraftII/", "replay_directory_location": "/home/aiarena/StarCraftII/Replays", "API_token": "", "max_game_time": "60486", "allow_debug": "Off", "visualize": "Off"}' > /home/aiarena/sc2-match-runner-gui-master/resources/flask_server/settings.json
 
 # Run the match runner gui
-ENTRYPOINT [ "/usr/local/bin/python3.7", "/home/aiarena/sc2-match-runner-gui-master/resources/flask_server/server.py" ]
+ENTRYPOINT [ "/usr/local/bin/python3.7", "arenaclient.proxy.server", '-f', 'true' ]
