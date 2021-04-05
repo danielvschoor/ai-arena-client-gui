@@ -1,6 +1,6 @@
 # Sets up ai-arena client gui
 
-FROM python:3.7-slim
+FROM python:3.9.3-slim
 MAINTAINER m1ndgames <m1nd@ai-arena.net>
 
 USER root
